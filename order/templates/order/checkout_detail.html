@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title%}
+checkout
+{%endblock%}
+
+{%block content %}
+  <h3>checkout detail</h3>
+  <h5>cost: {{order.total_price}}</h5>
+
+  <form method="post" action="{% url 'order:checkout_coupon' order.pk %}" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+  </form>
+
+{%endblock%}

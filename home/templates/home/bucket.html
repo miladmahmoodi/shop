@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title%}
+Buckets
+{%endblock%}
+
+{%block content %}
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Size</th>
+      <th scope="col">Last Modified</th>
+      <th scope="col">Download</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for bucket in buckets %}
+    <tr>
+      <th scope="row">{{forloop.counter	}}</th>
+      <td>{{bucket.key}}</td>
+      <td>{{bucket.size|filesizeformat}}</td>
+      <td>{{bucket.last_modified}}</td>
+      <td>
+        <a href="{% url 'home:bucket_delete' bucket.key %}">
+          delete
+        </a>
+      </td>
+      <td>
+        <a href="{% url 'home:bucket_download' bucket.key %}">
+          download
+        </a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{%endblock%}

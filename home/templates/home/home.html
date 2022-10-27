@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%}
+Home
+{% endblock%}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/css/main.css' %}">
+{% endblock%}
+
+
+{% block content %}
+    <h3>
+        home page content
+    </h3>
+    <hr>
+    {% for category in categories %}
+        <div class="btn-group">
+          <a href="{{category.get_absolute_url}}" type="button" class="btn btn-danger">
+              {{category.name}}
+          </a>
+          <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="visually-hidden">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu">
+              {% for sub in category.sub_categories.all%}
+                <li>
+                    <a class="dropdown-item" href="{{sub.get_absolute_url}}">{{sub.name}}</a>
+                </li>
+              {%endfor%}
+          </ul>
+        </div>
+    {% endfor %}
+    <hr>
+    {% for product in products %}
+        <div class="card" style="width: 18rem; display: inline-block;">
+          <img src='{{product.image.url}}' alt="Card image cap" class="card-img-top" >
+          <div class="card-body">
+          <a href="{{product.get_absolute_url}}">
+              <h5 class="card-title">{{product.name}}</h5>
+          </a>
+            <p class="card-text">{{product.description|truncatewords:5|safe}}</p>
+          </div>
+        </div>
+    {% endfor %}
+{% endblock%}
